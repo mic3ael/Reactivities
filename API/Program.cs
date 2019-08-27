@@ -20,6 +20,7 @@ namespace API
                try{
                    var context = services.GetRequiredService<DataContext>();
                    context.Database.Migrate();
+                   Seed.SeedData(context);
                } catch(Exception exp){
                    var logger = services.GetRequiredService<ILogger<Program>>();
                    logger.LogError(exp, "An error occured during migration");
