@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -26,7 +27,9 @@ namespace Application.User {
             private readonly ILogger<Login> _logger;
             private readonly UserManager<AppUser> _userManager;
             private readonly SignInManager<AppUser> _signInManager;
-            public Handler (UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ILogger<Login> logger) {
+            private readonly IJwtGenerator _jwtGenerator;
+            public Handler (UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator, ILogger<Login> logger) {
+                this._jwtGenerator = jwtGenerator;
                 this._signInManager = signInManager;
                 this._userManager = userManager;
                 this._logger = logger;
@@ -42,8 +45,7 @@ namespace Application.User {
                 var result = await _signInManager.CheckPasswordSignInAsync (user, request.Password, false);
 
                 if (result.Succeeded) {
-                    // TODO: generate token
-                    return new User { UserName = user.UserName, Email = user.Email, Token = "This will be a token", Image = null };
+                    return new User { UserName = user.UserName, Email = user.Email, Token = _jwtGenerator.CreateToken (user), Image = null };
                 }
 
                 throw new Exception (HttpStatusCode.Unauthorized.ToString ());
