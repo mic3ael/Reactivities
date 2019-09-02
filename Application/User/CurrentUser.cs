@@ -15,7 +15,8 @@ namespace Application.User {
             private readonly UserManager<AppUser> _userManager;
             private readonly IUserAccessor _userAccessor;
             private readonly IJwtGenerator _jwtGenerator;
-            public Handler (UserManager<AppUser> userManager, IJwtGenerator jwtGenerator, IUserAccessor userAccessor, ILogger<CurrentUser> logger) {
+            public Handler (UserManager<AppUser> userManager, IJwtGenerator jwtGenerator,
+                IUserAccessor userAccessor, ILogger<CurrentUser> logger) {
                 this._jwtGenerator = jwtGenerator;
                 this._userAccessor = userAccessor;
                 this._userManager = userManager;

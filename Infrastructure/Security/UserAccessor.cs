@@ -10,6 +10,7 @@ namespace Infrastructure.Security {
             this._httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetCurrentUserName() => _httpContextAccessor.HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        public string GetCurrentUserName () =>
+            _httpContextAccessor.HttpContext.User?.Claims?.FirstOrDefault (x => x.Type == ClaimTypes.NameIdentifier)?.Value;
     }
 }

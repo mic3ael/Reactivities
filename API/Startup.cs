@@ -2,6 +2,7 @@
 using Application.Activities;
 using Application.Interfaces;
 using Domain;
+using FluentValidation.AspNetCore;
 using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -46,6 +47,7 @@ namespace API {
                     var policy = new AuthorizationPolicyBuilder ().RequireAuthenticatedUser ().Build ();
                     opt.Filters.Add (new AuthorizeFilter (policy));
                 })
+                .AddFluentValidation (cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create> ())
                 .SetCompatibilityVersion (CompatibilityVersion.Version_2_2);
 
             var builder = services.AddIdentityCore<AppUser> ();
