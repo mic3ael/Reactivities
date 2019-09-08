@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers {
 
+    [AllowAnonymous]
     public class ActivitiesController : BaseController {
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> List (CancellationToken ct) {
